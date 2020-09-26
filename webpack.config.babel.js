@@ -1,10 +1,11 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-
-import '@babel/register';
 import path from 'path';
 
+const mode = process.env.NODE_ENV === 'production' ?
+  'production' : 'development'; 
+
 export default {
-  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  mode,
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -13,10 +14,6 @@ export default {
   resolve: {
 		extensions: ['.js', '.jsx', '.ts', '.tsx'],
 		modules: ['node_modules', './src']
-  },
-  devServer: {
-    contentBase: './',
-    port: 8080
   },
   module: {
 		rules: [
