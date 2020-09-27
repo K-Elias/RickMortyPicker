@@ -14,9 +14,8 @@ import {
 import { fetchDataAction } from './context/actionContext';
 import { Store } from './Store';
 import Header from './components/Header';
-import EpisodeList from './components/EpisodeList';
 
-const Episodes = lazy(() => import('./components/EpisodeList'));
+const EpisodeList = lazy(() => import('./components/EpisodeList'));
 
 const App = (): JSX.Element => {
   const { state, dispatch } = useContext(Store);
