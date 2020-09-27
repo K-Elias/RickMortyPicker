@@ -24,6 +24,8 @@ const App = (): JSX.Element => {
     state.episodes.length === 0 && fetchDataAction(dispatch);
   });
 
+  const Page = (): JSX.Element => <EpisodeList />;
+
   return (
     <Fragment>
       <Router>
@@ -33,11 +35,11 @@ const App = (): JSX.Element => {
             <Route
               exact
               path="/"
-              component={(): JSX.Element => <EpisodeList path="/" />}
+              component={Page}
             />
             <Route
               path="/fav"
-              component={(): JSX.Element => <EpisodeList path="/fav" />}
+              component={Page}
             />
           </Switch>
         </Suspense>

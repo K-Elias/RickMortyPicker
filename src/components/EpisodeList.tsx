@@ -1,22 +1,22 @@
 import React, { useContext } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { box, layout } from './styles';
 import { toggleFavAction } from '../context/actionContext'
 import { IEpisode } from '../types';
 import { Store } from '../Store';
 
-interface Props { path: string }
-
-const EpisodeList = (props: Props): JSX.Element => {
+const EpisodeList = (): JSX.Element => {
   const { state, dispatch } = useContext(Store);
+  const { pathname } = useLocation();
 
   if (state.episodes.length === 0) {
     return <h2>Loading...</h2>
   }
 
   let data: Array<IEpisode> = [];
-  if (props.path === '/') data = state.episodes;
-  else if (props.path === '/fav') data = state.favourites
+  if (pathname === '/') data = state.episodes;
+  else if (pathname === '/fav') data = state.favourites
   else return <h2>404, page doesn't exist...</h2>
 
   return (
