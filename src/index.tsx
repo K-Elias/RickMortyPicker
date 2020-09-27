@@ -5,7 +5,9 @@ import { Provider } from './Store';
 import App from './App';
 
 const Main = (): JSX.Element => (
-  <Provider><App /></Provider>
+  <Provider>
+    <App />
+  </Provider>
 );
 
 const root: HTMLElement = document.getElementById('app-root');
