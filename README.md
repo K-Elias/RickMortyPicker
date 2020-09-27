@@ -1,5 +1,5 @@
-# RickMortyPicker
+# SouthParkpicker
 
-An app that list your favorite Rick&Morty episode that you can pick yourself.
+An app that list your favorite South Park episode that you can pick yourself.
 
-React + Typescript
+technical environnement: React + Typescript
