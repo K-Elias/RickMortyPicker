@@ -1,21 +1,16 @@
-import React, { createContext, useReducer } from 'react';
+import { configureStore, createStore } from '@reduxjs/toolkit'
+import { Provider } from 'react-redux';
+import React from 'react';
 
-import { IContextProps, IState } from './types';
 import { reducer } from './context/reducer';
 
-const initialState: IState = {
-  episodes: [],
-  favourites: []
-};
+export const store = configureStore({ reducer });
 
-export const Store = createContext({} as IContextProps);
-
-export const Provider =
+export const Store =
   ({ children }: JSX.ElementChildrenAttribute): JSX.Element => {
-    const [state, dispatch] = useReducer(reducer, initialState);
     return (
-      <Store.Provider value={{ state, dispatch }}>
+      <Provider store={store}>
         {children}
-      </Store.Provider>
+      </Provider>
     );
-  };
+  }; 

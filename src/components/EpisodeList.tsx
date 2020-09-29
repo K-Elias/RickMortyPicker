@@ -1,39 +1,33 @@
-import React, { useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
-import { box, layout } from './styles';
-import { toggleFavAction } from '../context/actionContext'
-import { IEpisode } from '../types';
-import { Store } from '../Store';
+import { IEpisode, IState } from '../types';
+import { layout } from './styles';
+import Episode from './Episode';
 
-const EpisodeList = (): JSX.Element => {
-  const { state, dispatch } = useContext(Store);
-  const { pathname } = useLocation();
+interface Props {
+  path: string
+};
+
+const EpisodeList = (props: Props): JSX.Element => {
+  const state = useSelector<IState, IState>((state: IState) => state);
 
   if (state.episodes.length === 0) {
     return <h2>Loading...</h2>
   }
-
   let data: Array<IEpisode> = [];
-  if (pathname === '/') data = state.episodes;
-  else if (pathname === '/fav') data = state.favourites
+  if (props.path === '/') data = state.episodes;
+  else if (props.path === '/fav') data = state.favourites
   else return <h2>404, page doesn't exist...</h2>
-
+  console.log(state);
   return (
     <section style={layout}>
-      {data.map((episode: IEpisode) => (
-        <section style={box} key={episode.id}>
-          <img src={episode.image.medium} alt={`South Park: ${episode.name}`} />
-          <section style={{ maxWidth: '29vh' }} >
-            <div>{episode.name}</div>
-            <div>Season: {episode.season} Number: {episode.number}</div>
-            <button type="button"
-              onClick={(): void => toggleFavAction(state, dispatch, episode)}>
-              {state.favourites.includes(episode) ? 'Unfav' : 'Fav'}
-            </button>
-          </section>
-        </section>
-      ))}
+      {data.map((episode: IEpisode) =>
+        <Episode
+          key={episode.id}
+          episode={episode}
+        />
+      )}
     </section>
   );
 }

@@ -1,14 +1,20 @@
+import { createSlice } from '@reduxjs/toolkit';
 import { IState, IAction } from '../types';
 
-export const reducer = (state: IState, action: IAction): IState => {
-  switch (action.type) {
-    case 'FETCH_DATA':
-      return { ...state, episodes: action.payload };
-    case 'ADD_FAV':
-      return { ...state, favourites: [...state.favourites, ...action.payload] };
-    case 'REMOVE_FAV':
-      return { ...state, favourites: action.payload }
-    default:
-      return state;
+const rootSlice = createSlice({
+  name: "root",
+  initialState: {
+    episodes: [],
+    favourites: []
+  } as IState,
+  reducers: {
+    fetchData: (state: IState, action: IAction) => ({ ...state, episodes: action.payload }),
+    addFav: (state: IState, action: IAction) =>
+      ({ ...state, favourites: [...state.favourites, ...action.payload] }),
+    removeFav: (state: IState, action: IAction) => ({ ...state, favourites: action.payload }),
   }
-};
+});
+
+export const reducer = rootSlice.reducer;
+
+export const { fetchData, addFav, removeFav } = rootSlice.actions;

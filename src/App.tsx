@@ -1,30 +1,29 @@
 import React, {
   lazy,
   Suspense,
-  useContext,
   Fragment,
-  useEffect
+  useEffect, Dispatch
 } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route
 } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { fetchDataAction } from './context/actionContext';
-import { Store } from './Store';
+import { IAction, IState } from './types';
 import Header from './components/Header';
 
 const EpisodeList = lazy(() => import('./components/EpisodeList'));
 
 const App = (): JSX.Element => {
-  const { state, dispatch } = useContext(Store);
+  const dispatch = useDispatch<Dispatch<IAction>>();
+  const state = useSelector<IState, IState>((state: IState) => state);
 
   useEffect((): void => {
     state.episodes.length === 0 && fetchDataAction(dispatch);
   });
-
-  const Page = (): JSX.Element => <EpisodeList />;
 
   return (
     <Fragment>
@@ -35,11 +34,11 @@ const App = (): JSX.Element => {
             <Route
               exact
               path="/"
-              component={Page}
+              component={() => <EpisodeList path="/" />}
             />
             <Route
               path="/fav"
-              component={Page}
+              component={() => <EpisodeList path="/fav" />}
             />
           </Switch>
         </Suspense>

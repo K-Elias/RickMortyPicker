@@ -1,13 +1,13 @@
 import { render } from 'react-dom';
 import React from 'react';
 
-import { Provider } from './Store';
+import { Store } from './Store';
 import App from './App';
 
 const Main = (): JSX.Element => (
-  <Provider>
+  <Store>
     <App />
-  </Provider>
+  </Store>
 );
 
 const root: HTMLElement = document.getElementById('app-root');

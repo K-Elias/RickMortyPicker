@@ -1,14 +1,15 @@
 import { Link, useLocation } from 'react-router-dom';
-import React, { useContext } from 'react';
+import { useSelector } from 'react-redux';
+import React from 'react';
 
 import { headerStyle } from './styles';
-import { Store } from '../Store';
+import { IState } from '../types'
 
 const Header = (): JSX.Element => {
-  const { state } = useContext(Store);
+  const favourites = useSelector((state: IState) => state.favourites);
   const { pathname } = useLocation();
   let path: string = '/fav'
-  let ancre: string = `Favourite(s): ${state.favourites.length}`;
+  let ancre: string = `Favourite(s): ${favourites.length}`;
   if (pathname === '/fav') {
     path = '/'
     ancre = 'Back to episodes';
