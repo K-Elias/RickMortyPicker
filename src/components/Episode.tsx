@@ -1,4 +1,4 @@
-import React, { Dispatch, useCallback } from 'react';
+import React, { Dispatch } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { IAction, IEpisode, IState } from '../types';
@@ -11,15 +11,16 @@ interface Props {
 
 const Episode = ({ episode }: Props): JSX.Element => {
   const dispatch = useDispatch<Dispatch<IAction>>();
-  const state = useSelector<IState, IState>((state: IState) => state);
+  const favourites =
+    useSelector<IState, Array<IEpisode>>(state => state.favourites);
   const style = { maxWidth: '29vh' }
 
   const handleClick = (): void => {
-    if (!state.favourites.includes(episode)) {
+    if (!favourites.includes(episode)) {
       return dispatch(addFav([episode]));
     };
     const favWithoutEpisode: Array<IEpisode> =
-      state.favourites.filter((fav: IEpisode) => fav.id !== episode.id);
+      favourites.filter((fav: IEpisode) => fav.id !== episode.id);
     return dispatch(removeFav([...favWithoutEpisode]));
   };
 
@@ -30,7 +31,7 @@ const Episode = ({ episode }: Props): JSX.Element => {
         <div>{episode.name}</div>
         <div>Season: {episode.season} Number: {episode.number}</div>
         <button type="button" onClick={handleClick}>
-          {state.favourites.includes(episode) ? 'Unfav' : 'Fav'}
+          {favourites.includes(episode) ? 'Unfav' : 'Fav'}
         </button>
       </section>
     </section>
