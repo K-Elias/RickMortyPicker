@@ -15,14 +15,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios'
 
 import { fetchData, } from './context/reducer';
-import { IAction, IState } from './types';
+import { IAction, IEpisode, IState } from './types';
 import Header from './components/Header';
 
 const EpisodeList = lazy(() => import('./components/EpisodeList'));
 
 const App = (): JSX.Element => {
   const dispatch = useDispatch<Dispatch<IAction>>();
-  const state = useSelector<IState, IState>((state: IState) => state);
+  const episodes = useSelector<IState, Array<IEpisode>>((state: IState) => state.episodes);
 
   const fetchDataFunc = async (): Promise<void> => {
     const URL = 'https://api.tvmaze.com/singlesearch/shows?q=south-park&embed=episodes';
@@ -34,8 +34,8 @@ const App = (): JSX.Element => {
   const fetchDataAction = useCallback(() => fetchDataFunc(), [])
 
   useEffect((): void => {
-    state.episodes.length === 0 && fetchDataAction();
-  });
+    episodes.length === 0 && fetchDataAction();
+  }, [episodes]);
 
   return (
     <Fragment>
