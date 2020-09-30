@@ -24,14 +24,11 @@ const App = (): JSX.Element => {
   const dispatch = useDispatch<Dispatch<IAction>>();
   const episodes = useSelector<IState, Array<IEpisode>>((state: IState) => state.episodes);
 
-  const fetchDataFunc = async (): Promise<void> => {
-    const URL = 'https://api.tvmaze.com/singlesearch/shows?q=south-park&embed=episodes';
+  const fetchDataAction = async (): Promise<void> => {
+    const URL: string = 'https://api.tvmaze.com/singlesearch/shows?q=south-park&embed=episodes';
     const dataFetched = await axios.get(URL);
-    const dataJSON = dataFetched.data;
-    return dispatch(fetchData([...dataJSON._embedded.episodes]));
+    return dispatch(fetchData([...dataFetched.data._embedded.episodes]));
   };
-
-  const fetchDataAction = useCallback(() => fetchDataFunc(), [])
 
   useEffect((): void => {
     episodes.length === 0 && fetchDataAction();

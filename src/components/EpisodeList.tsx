@@ -8,12 +8,10 @@ import Episode from './Episode';
 
 const EpisodeList = (): JSX.Element => {
   const { pathname } = useLocation<string>();
-  const list =
-    useSelector<IState, Array<IEpisode>>((state: IState) => {
-      return pathname === '/' ? state.episodes : state.favourites
-    });
+  const list = useSelector<IState, Array<IEpisode>>((state: IState) => {
+    return pathname === '/' ? state.episodes : state.favourites
+  });
 
-  console.log('render')
   return (
     <section style={layout}>
       {list.map((episode: IEpisode) =>
